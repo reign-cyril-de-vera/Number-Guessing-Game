@@ -22,7 +22,11 @@ INSERT_GAME_DETAILS(){
   $PSQL "$query"
 }
 
-random_number=$((RANDOM % 1001))
+
+
+# MAIN
+
+RANDOM_NUM=$((RANDOM % 1001))
 
 echo "Enter your username:"
 read USERNAME
@@ -37,3 +41,25 @@ else
 fi
 
 echo "Guess the secret number between 1 and 1000:"
+read GUESS
+GUESSED=false
+NUM_GUESS=0
+
+while [ "$GUESSED" = false ]; do
+  if [[ ! $GUESS =~ ^[0-9]+$ ]]; then
+    echo "That is not an integer, guess again:"
+    read GUESS
+  elif [[ $GUESS -gt $RANDOM_NUM ]]; then
+    NUM_GUESS=$(($NUM_GUESS + 1))
+    echo "It's lower than that, guess again:"
+    read GUESS
+  elif [[ $GUESS -lt $RANDOM_NUM ]]; then
+    NUM_GUESS=$(($NUM_GUESS + 1))
+    echo "It's higher than that, guess again:"
+    read GUESS
+  else
+    NUM_GUESS=$((NUM_GUESS + 1))
+    echo "You guessed it in $NUM_GUESS tries. The secret number was $RANDOM_NUM. Nice job!"
+    GUESSED=true
+  fi
+done
