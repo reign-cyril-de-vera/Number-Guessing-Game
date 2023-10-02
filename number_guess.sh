@@ -63,3 +63,5 @@ while [ "$GUESSED" = false ]; do
     GUESSED=true
   fi
 done
+
+ADD_TO_DATABASE="$(INSERT_GAME_DETAILS "$USERNAME" $NUM_GUESS)"
